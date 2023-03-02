@@ -13,6 +13,7 @@ const readFile = (error, data) => {
 // console.log(fs.readFile("notes.txt", "utf-8", readFile))
 
 // file harus cjs jgn module
+// agar tidak ada undefined ganti ke Sync
 console.log(
-  fs.readFileSync(path.resolve(__dirname, "notes.txt"), "utf-8", readFile),
+  fs.readFile(path.resolve(__dirname, "notes.txt"), "utf-8", readFile),
 )
