@@ -1,3 +1,4 @@
 *.json
 
 JS Dasar/
+node_modules/
