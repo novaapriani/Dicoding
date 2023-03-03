@@ -34,6 +34,12 @@ const routes = [
     handler: (req, h) => {
       // path param ada di params
       const { name = "stranger" } = req.params
+      const { lang } = req.query
+
+      if (lang === "id") {
+        return `Hai ${name}! dari ${lang}`
+      }
+
       return `Hello ${name}`
     },
   },
