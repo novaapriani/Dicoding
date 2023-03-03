@@ -28,6 +28,16 @@ const routes = [
     },
   },
   {
+    method: "GET",
+    // dengan adanya (?) menjadikan parameter menjadi optional
+    path: "/hello/{name?}",
+    handler: (req, h) => {
+      // path param ada di params
+      const { name = "stranger" } = req.params
+      return `Hello ${name}`
+    },
+  },
+  {
     // prevent method yg belum di-define disetiap route
     method: "*",
     // menangani path yg belum ditentukan
