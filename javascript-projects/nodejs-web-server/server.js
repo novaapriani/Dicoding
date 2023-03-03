@@ -9,7 +9,10 @@ const requestListener = (req, res) => {
 
   if (url === "/") {
     if (method === "GET") {
-      res.setHeader("Content-Type", "text/html")
+      res.setHeader("Content-Type", "application/json")
+      // header dengan properti tidak standar
+      // tambahkan X-Proper-Case
+      res.setHeader("X-Powered-By", "NodeJS")
 
       res.statusCode = 200
       res.end("<h1>Ini adalah homepage!</h1>")
