@@ -3,7 +3,16 @@ const routes = [
     method: "GET",
     path: "/",
     handler: (req, h) => {
-      return "Homepage"
+      return (
+        h
+          //   message ke user
+          .response("success")
+          //   res.status
+          .code(200)
+          //   content-type
+          .type("application/json")
+          .header("X-Powered-By", "NodeJS")
+      )
     },
   },
   {
