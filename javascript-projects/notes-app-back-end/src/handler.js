@@ -93,9 +93,34 @@ const editNoteByIdHandler = (req, h) => {
   return response;
 };
 
+const deleteNoteByIdHandler = (req, h) => {
+  const { id } = req.params;
+
+  const note = notes.findIndex((n) => n.id === id);
+
+  if (note !== -1) {
+    notes.splice(note, 1);
+
+    const response = h.response({
+      status: 'success',
+      message: 'Data berhasil dihapus',
+    });
+    response.code(200);
+    return response;
+  }
+
+  const response = h.response({
+    status: 'fail',
+    message: 'Data gagal dihapus. Id tidak ditemukan!',
+  });
+  response.code(404);
+  return response;
+};
+
 module.exports = {
   addNoteHandler,
   getAllNotesHandler,
   getNoteByIdHandler,
   editNoteByIdHandler,
+  deleteNoteByIdHandler,
 };
