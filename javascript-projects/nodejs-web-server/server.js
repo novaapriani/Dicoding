@@ -15,9 +15,16 @@ const requestListener = (req, res) => {
   }
 
   if (method === "POST") {
-    res.setHeader("Content-Type", "text/html")
+    let body = []
 
-    res.end("<h1>Hai</h1>")
+    req.on("data", (chunk) => body.push(chunk))
+    req.on("end", () => {
+      // ubah buffer menjadi actual data
+      body = Buffer.concat(body).toString()
+      //   parse data yg dikirim
+      const { name } = JSON.parse(body)
+      res.end(`Hai ${name}`)
+    })
   }
 }
 
