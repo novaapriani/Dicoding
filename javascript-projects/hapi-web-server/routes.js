@@ -44,6 +44,15 @@ const routes = [
     },
   },
   {
+    method: "POST",
+    path: "/login",
+    handler: (req, h) => {
+      // ambil data dari body
+      const { username } = req.payload
+      return `${username} telah berhasil login!`
+    },
+  },
+  {
     // prevent method yg belum di-define disetiap route
     method: "*",
     // menangani path yg belum ditentukan
