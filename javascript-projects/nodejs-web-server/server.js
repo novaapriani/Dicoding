@@ -15,18 +15,32 @@ const requestListener = (req, res) => {
       res.setHeader("X-Powered-By", "NodeJS")
 
       res.statusCode = 200
-      res.end("<h1>Ini adalah homepage!</h1>")
+      res.end(
+        JSON.stringify({
+          message: "Ini adalah homepage",
+        }),
+      )
     } else {
+      res.setHeader("Content-Type", "application/json")
       res.statusCode = 400
-      res.end(`Halaman tidak dapat diakses dengan ${method} request!`)
+      res.end(
+        JSON.stringify({
+          message: `Halaman tidak dapat diakses dengan ${method} request!`,
+        }),
+      )
     }
   } else if (url === "/about") {
     if (method === "GET") {
-      res.setHeader("Content-Type", "text/html")
+      res.setHeader("Content-Type", "application/json")
 
       res.statusCode = 200
-      res.end("<h1>Halo ini adalah halaman About!</h1>")
+      res.end(
+        JSON.stringify({
+          message: "Ini adalah halaman about",
+        }),
+      )
     } else if (method === "POST") {
+      res.setHeader("Content-Type", "application/json")
       let body = []
 
       req.on("data", (chunk) => body.push(chunk))
@@ -35,15 +49,29 @@ const requestListener = (req, res) => {
         body = Buffer.concat(body).toString()
         //   parse data yg dikirim
         const { name } = JSON.parse(body)
-        res.end(`Halo ${name}! Ini adalah halaman about.`)
+        res.end(
+          JSON.stringify({
+            message: `Halo ${name}! Ini adalah halaman about.`,
+          }),
+        )
       })
     } else {
+      res.setHeader("Content-Type", "application/json")
       res.statusCode = 400
-      res.end(`Halaman tidak dapat diakses dengan ${method} request!`)
+      res.end(
+        JSON.stringify({
+          message: `Halaman tidak dapat diakses dengan ${method} request!`,
+        }),
+      )
     }
   } else {
+    res.setHeader("Content-Type", "application/json")
     res.statusCode = 404
-    res.end("Halaman tidak dapat ditemukan!")
+    res.end(
+      JSON.stringify({
+        message: "Halaman tidak dapat ditemukan!",
+      }),
+    )
   }
 }
 
