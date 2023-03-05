@@ -96,7 +96,6 @@ const getBookByIdHandler = (req, h) => {
 
 const updateBookByIdHandler = (req, h) => {
   const { bookId } = req.params;
-  const { id } = books;
 
   const {
     name,
@@ -109,7 +108,32 @@ const updateBookByIdHandler = (req, h) => {
     reading,
   } = req.payload;
 
-  if (!name) {
+  const updatedAt = new Date().toISOString();
+
+  const index = books.findIndex((b) => b.id === bookId);
+
+  if (index !== -1) {
+    books[index] = {
+      ...books[index],
+      name,
+      year,
+      author,
+      summary,
+      publisher,
+      pageCount,
+      readPage,
+      reading,
+      updatedAt,
+    };
+
+    const response = h.response({
+      status: 'success',
+      message: 'Buku berhasil diperbarui',
+    });
+
+    response.code(200);
+    return response;
+  } else if (!name) {
     const response = h.response({
       status: 'fail',
       message: 'Gagal memperbarui buku. Mohon isi nama buku',
@@ -126,22 +150,14 @@ const updateBookByIdHandler = (req, h) => {
 
     response.code(400);
     return response;
-  } else if (bookId !== id) {
-    const response = h.response({
-      status: 'fail',
-      message: 'Gagal memperbarui buku. Id tidak ditemukan',
-    });
-
-    response.code(404);
-    return response;
   }
 
   const response = h.response({
-    status: 'success',
-    message: 'Buku berhasil diperbarui',
+    status: 'fail',
+    message: 'Gagal memperbarui buku. Id tidak ditemukan',
   });
 
-  response.code(200);
+  response.code(404);
   return response;
 };
 
