@@ -13,26 +13,9 @@ const addBookHandler = (req, h) => {
     readPage,
     reading,
   } = req.payload;
-  const finished = false;
+  let finished = false;
   const insertedAt = new Date().toISOString();
   const updatedAt = insertedAt;
-
-  books.push({
-    id,
-    name,
-    year,
-    author,
-    summary,
-    publisher,
-    pageCount,
-    readPage,
-    finished,
-    reading,
-    insertedAt,
-    updatedAt,
-  });
-
-  const isSuccess = books.filter((book) => book.id === id).length > 0;
 
   if (!name) {
     const response = h.response({
@@ -51,7 +34,27 @@ const addBookHandler = (req, h) => {
 
     response.code(400);
     return response;
-  } else if (isSuccess) {
+  } else if (readPage === pageCount) {
+    finished = true;
+  }
+
+  books.push({
+    id,
+    name,
+    year,
+    author,
+    summary,
+    publisher,
+    pageCount,
+    readPage,
+    finished,
+    reading,
+    insertedAt,
+    updatedAt,
+  });
+
+  const isSuccess = books.filter((book) => book.id === id).length > 0;
+  if (isSuccess) {
     const response = h.response({
       status: 'success',
       message: 'Buku berhasil ditambahkan',
@@ -66,8 +69,6 @@ const addBookHandler = (req, h) => {
 };
 
 const getAllBooksHandler = (req, h) => {
-  console.log(books);
-
   if (books.length === 0) {
     const response = h.response({
       status: 'success',
@@ -79,7 +80,7 @@ const getAllBooksHandler = (req, h) => {
     response.code(200);
     return response;
   }
-
+  console.log(books);
   const response = h.response({
     status: 'success',
     data: {
@@ -136,7 +137,7 @@ const updateBookByIdHandler = (req, h) => {
 
   const updatedAt = new Date().toISOString();
 
-  const index = books.findIndex((b) => b.id === bookId);
+  const index = books.findIndex((book) => book.id === bookId);
 
   if (index !== -1) {
     if (!name) {
