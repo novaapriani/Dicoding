@@ -113,6 +113,25 @@ const updateBookByIdHandler = (req, h) => {
   const index = books.findIndex((b) => b.id === bookId);
 
   if (index !== -1) {
+    if (!name) {
+      const response = h.response({
+        status: 'fail',
+        message: 'Gagal memperbarui buku. Mohon isi nama buku',
+      });
+
+      response.code(400);
+      return response;
+    } else if (readPage > pageCount) {
+      const response = h.response({
+        status: 'fail',
+        message:
+          'Gagal memperbarui buku. readPage tidak boleh lebih besar dari pageCount',
+      });
+
+      response.code(400);
+      return response;
+    }
+
     books[index] = {
       ...books[index],
       name,
@@ -132,23 +151,6 @@ const updateBookByIdHandler = (req, h) => {
     });
 
     response.code(200);
-    return response;
-  } else if (!name) {
-    const response = h.response({
-      status: 'fail',
-      message: 'Gagal memperbarui buku. Mohon isi nama buku',
-    });
-
-    response.code(400);
-    return response;
-  } else if (readPage > pageCount) {
-    const response = h.response({
-      status: 'fail',
-      message:
-        'Gagal memperbarui buku. readPage tidak boleh lebih besar dari pageCount',
-    });
-
-    response.code(400);
     return response;
   }
 
