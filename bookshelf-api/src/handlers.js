@@ -25,7 +25,8 @@ const addBookHandler = (req, h) => {
 
     response.code(400);
     return response;
-  } else if (readPage > pageCount) {
+  }
+  if (readPage > pageCount) {
     const response = h.response({
       status: 'fail',
       message:
@@ -34,7 +35,8 @@ const addBookHandler = (req, h) => {
 
     response.code(400);
     return response;
-  } else if (readPage === pageCount) {
+  }
+  if (readPage === pageCount) {
     finished = true;
   }
 
@@ -69,7 +71,7 @@ const addBookHandler = (req, h) => {
 };
 
 const getAllBooksHandler = (req, h) => {
-  let { name, reading, finished } = req.query;
+  const { name, reading, finished } = req.query;
 
   if (books.length === 0) {
     const response = h.response({
@@ -81,13 +83,15 @@ const getAllBooksHandler = (req, h) => {
 
     response.code(200);
     return response;
-  } else if (name) {
+  }
+  if (name) {
     const response = h.response({
       status: 'success',
       data: {
         books: books
-          .filter((book) => book.name.includes('dicoding'))
+          .filter((book) => book.name.includes('dicoding'.toLowerCase))
           .map((book) => ({
+            id: book.id,
             name: book.name,
             publisher: book.publisher,
           })),
@@ -96,8 +100,8 @@ const getAllBooksHandler = (req, h) => {
 
     response.code(200);
     return response;
-  } else if (reading == '0') {
-    console.log(books);
+  }
+  if (reading == '0') {
     const response = h.response({
       status: 'success',
       data: {
@@ -113,8 +117,8 @@ const getAllBooksHandler = (req, h) => {
 
     response.code(200);
     return response;
-  } else if ((reading = '1')) {
-    console.log(books);
+  }
+  if (reading == '1') {
     const response = h.response({
       status: 'success',
       data: {
@@ -130,8 +134,8 @@ const getAllBooksHandler = (req, h) => {
 
     response.code(200);
     return response;
-  } else if ((finished = '0')) {
-    console.log(books);
+  }
+  if (finished == '0') {
     const response = h.response({
       status: 'success',
       data: {
@@ -147,8 +151,8 @@ const getAllBooksHandler = (req, h) => {
 
     response.code(200);
     return response;
-  } else if ((finished = '1')) {
-    console.log(books);
+  }
+  if (finished == '1') {
     const response = h.response({
       status: 'success',
       data: {
@@ -233,7 +237,8 @@ const updateBookByIdHandler = (req, h) => {
 
       response.code(400);
       return response;
-    } else if (readPage > pageCount) {
+    }
+    if (readPage > pageCount) {
       const response = h.response({
         status: 'fail',
         message:
@@ -277,7 +282,6 @@ const updateBookByIdHandler = (req, h) => {
 
 const deleteBookByIdHandler = (req, h) => {
   const { bookId } = req.params;
-  const { id } = books;
 
   const book = books.findIndex((b) => b.id === bookId);
 
