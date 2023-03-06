@@ -1,3 +1,4 @@
+// menangani setiap request yang masuk ke /notes url
 const routes = (handler) => [
   {
     method: 'POST',
