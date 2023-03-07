@@ -1,6 +1,9 @@
 class NotesHandler {
-  constructor(service) {
+  constructor(service, validator) {
+    // service & validator sudah di-register
+    // sehingga bisa akses method di dalamnya
     this._service = service;
+    this._validator = validator;
 
     this.postNoteHandler = this.postNoteHandler.bind(this);
     this.getNotesHandler = this.getNotesHandler.bind(this);
@@ -11,6 +14,8 @@ class NotesHandler {
 
   postNoteHandler(request, h) {
     try {
+      // bisa access method karena udah di-register
+      this._validator.validateNotePayload(request.payload);
       const { title = 'untitled', tags, body } = request.payload;
 
       // return id from addNote
@@ -30,7 +35,7 @@ class NotesHandler {
         status: 'fail',
         message: error.message,
       });
-      response.code(400);
+      response.code(404);
       return response;
     }
   }
@@ -67,6 +72,8 @@ class NotesHandler {
   }
 
   putNoteByIdHandler(request, h) {
+    // bisa access method karena udah di-register
+    this._validator.validateNotePayload(request.payload);
     const { noteId } = request.params;
     try {
       this._service.editNoteById(noteId, request.payload);
