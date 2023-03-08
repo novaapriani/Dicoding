@@ -24,7 +24,7 @@ class SongsHandler {
 
       const response = h.response({
         status: 'success',
-        message: 'Lagu berhasil diperbarui',
+        message: 'Lagu berhasil ditambahkan',
         data: {
           songId,
         },
@@ -53,14 +53,38 @@ class SongsHandler {
     }
   }
 
-  async getSongsHandler() {
-    const songs = await this._service.getSongs();
-    return {
-      status: 'success',
-      data: {
-        songs,
-      },
-    };
+  async getSongsHandler(req, h) {
+    try {
+      const { title, performer } = req.query;
+      const songs = await this._service.getSongs(title, performer);
+      const response = h.response({
+        status: 'success',
+        data: {
+          songs,
+        },
+      });
+      response.code(200);
+      return response;
+    } catch (error) {
+      if (error instanceof ClientError) {
+        const response = h.response({
+          status: 'fail',
+          message: error.message,
+        });
+
+        response.code(error.statusCode);
+        return response;
+      }
+
+      console.error(error);
+      const response = h.response({
+        status: 'error',
+        message: 'Maaf terjadi kegagalan di server kami',
+      });
+
+      response.code(500);
+      return response;
+    }
   }
 
   async getSongByIdHandler(req, h) {
