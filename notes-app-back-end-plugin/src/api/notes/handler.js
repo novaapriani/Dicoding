@@ -14,14 +14,14 @@ class NotesHandler {
     this.deleteNoteByIdHandler = this.deleteNoteByIdHandler.bind(this);
   }
 
-  postNoteHandler(request, h) {
+  async postNoteHandler(request, h) {
     try {
       // bisa access method karena udah di-register
       this._validator.validateNotePayload(request.payload);
       const { title = 'untitled', tags, body } = request.payload;
 
       // return id from addNote
-      const noteId = this._service.addNote({ title, tags, body });
+      const noteId = await this._service.addNote({ title, tags, body });
 
       const response = h.response({
         status: 'success',
@@ -54,8 +54,8 @@ class NotesHandler {
     }
   }
 
-  getNotesHandler() {
-    const notes = this._service.getNotes();
+  async getNotesHandler() {
+    const notes = await this._service.getNotes();
 
     return {
       status: 'success',
@@ -65,10 +65,10 @@ class NotesHandler {
     };
   }
 
-  getNoteByIdHandler(request, h) {
+  async getNoteByIdHandler(request, h) {
     try {
       const { noteId } = request.params;
-      const note = this._service.getNoteById(noteId);
+      const note = await this._service.getNoteById(noteId);
       return {
         status: 'success',
         data: {
@@ -97,12 +97,12 @@ class NotesHandler {
     }
   }
 
-  putNoteByIdHandler(request, h) {
+  async putNoteByIdHandler(request, h) {
     // bisa access method karena udah di-register
     this._validator.validateNotePayload(request.payload);
     const { noteId } = request.params;
     try {
-      this._service.editNoteById(noteId, request.payload);
+      await this._service.editNoteById(noteId, request.payload);
 
       const response = h.response({
         status: 'success',
@@ -132,11 +132,11 @@ class NotesHandler {
     }
   }
 
-  deleteNoteByIdHandler(request, h) {
+  async deleteNoteByIdHandler(request, h) {
     const { noteId } = request.params;
 
     try {
-      this._service.deleteNoteById(noteId);
+      await this._service.deleteNoteById(noteId);
 
       const response = h.response({
         status: 'success',

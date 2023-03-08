@@ -2,4 +2,4 @@
 
 JS Dasar/
 node_modules/
-.env
+*.env
