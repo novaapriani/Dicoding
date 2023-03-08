@@ -22,34 +22,32 @@ class SongsHandler {
         albumId,
       });
 
-      const response = h.response({
-        status: 'success',
-        message: 'Lagu berhasil ditambahkan',
-        data: {
-          songId,
-        },
-      });
-      response.code(200);
-      return response;
+      return h
+        .response({
+          status: 'success',
+          message: 'Lagu berhasil ditambahkan',
+          data: {
+            songId,
+          },
+        })
+        .code(200);
     } catch (error) {
       if (error instanceof ClientError) {
-        const response = h.response({
-          status: 'fail',
-          message: error.message,
-        });
-
-        response.code(error.statusCode);
-        return response;
+        return h
+          .response({
+            status: 'fail',
+            message: error.message,
+          })
+          .code(error.statusCode);
       }
 
       console.error(error);
-      const response = h.response({
-        status: 'error',
-        message: 'Maaf terjadi kegagalan di server kami',
-      });
-
-      response.code(500);
-      return response;
+      return h
+        .response({
+          status: 'error',
+          message: 'Maaf terjadi kegagalan di server kami',
+        })
+        .code(500);
     }
   }
 
@@ -57,33 +55,31 @@ class SongsHandler {
     try {
       const { title, performer } = req.query;
       const songs = await this._service.getSongs(title, performer);
-      const response = h.response({
-        status: 'success',
-        data: {
-          songs,
-        },
-      });
-      response.code(200);
-      return response;
+      return h
+        .response({
+          status: 'success',
+          data: {
+            songs,
+          },
+        })
+        .code(200);
     } catch (error) {
       if (error instanceof ClientError) {
-        const response = h.response({
-          status: 'fail',
-          message: error.message,
-        });
-
-        response.code(error.statusCode);
-        return response;
+        return h
+          .response({
+            status: 'fail',
+            message: error.message,
+          })
+          .code(error.statusCode);
       }
 
       console.error(error);
-      const response = h.response({
-        status: 'error',
-        message: 'Maaf terjadi kegagalan di server kami',
-      });
-
-      response.code(500);
-      return response;
+      return h
+        .response({
+          status: 'error',
+          message: 'Maaf terjadi kegagalan di server kami',
+        })
+        .code(500);
     }
   }
 
@@ -92,32 +88,31 @@ class SongsHandler {
       const { songId } = req.params;
       const song = await this._service.getSongById(songId);
 
-      const response = h.response({
-        status: 'success',
-        data: {
-          song,
-        },
-      });
-      response.code(201);
-      return response;
+      return h
+        .response({
+          status: 'success',
+          data: {
+            song,
+          },
+        })
+        .code(201);
     } catch (error) {
       if (error instanceof ClientError) {
-        const response = h.response({
-          status: 'fail',
-          message: error.message,
-        });
-        response.code(error.statusCode);
-        return response;
+        return h
+          .response({
+            status: 'fail',
+            message: error.message,
+          })
+          .code(error.statusCode);
       }
 
-      // Server ERROR!
-      const response = h.response({
-        status: 'error',
-        message: 'Maaf, terjadi kegagalan pada server kami.',
-      });
-      response.code(500);
       console.error(error);
-      return response;
+      return h
+        .response({
+          status: 'error',
+          message: 'Maaf terjadi kegagalan di server kami',
+        })
+        .code(500);
     }
   }
 
@@ -128,30 +123,28 @@ class SongsHandler {
 
       await this._service.editSongById(songId, req.payload);
 
-      const response = h.response({
-        status: 'success',
-        message: 'Lagu berhasil diperbarui',
-      });
-      response.code(201);
-      return response;
+      return h
+        .response({
+          status: 'success',
+          message: 'Lagu berhasil diperbarui',
+        })
+        .code(201);
     } catch (error) {
       if (error instanceof ClientError) {
-        const response = h.response({
-          status: 'fail',
-          message: error.message,
-        });
-        response.code(error.statusCode);
-        return response;
+        return h
+          .response({
+            status: 'fail',
+            message: error.message,
+          })
+          .code(error.statusCode);
       }
-
-      // Server ERROR!
-      const response = h.response({
-        status: 'error',
-        message: 'Maaf, terjadi kegagalan pada server kami.',
-      });
-      response.code(500);
       console.error(error);
-      return response;
+      return h
+        .response({
+          status: 'error',
+          message: 'Maaf terjadi kegagalan di server kami',
+        })
+        .code(500);
     }
   }
 
@@ -168,22 +161,21 @@ class SongsHandler {
       return response;
     } catch (error) {
       if (error instanceof ClientError) {
-        const response = h.response({
-          status: 'fail',
-          message: error.message,
-        });
-        response.code(error.statusCode);
-        return response;
+        return h
+          .response({
+            status: 'fail',
+            message: error.message,
+          })
+          .code(error.statusCode);
       }
 
-      // Server ERROR!
-      const response = h.response({
-        status: 'error',
-        message: 'Maaf, terjadi kegagalan pada server kami.',
-      });
-      response.code(500);
       console.error(error);
-      return response;
+      return h
+        .response({
+          status: 'error',
+          message: 'Maaf terjadi kegagalan di server kami',
+        })
+        .code(500);
     }
   }
 }

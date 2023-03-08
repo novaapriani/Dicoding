@@ -17,34 +17,32 @@ class AlbumsHandler {
 
       const albumId = await this._service.addAlbum({ name, year });
 
-      const response = h.response({
-        status: 'success',
-        message: 'Album berhasil ditambahkan',
-        data: {
-          albumId,
-        },
-      });
-      response.code(201);
-      return response;
+      return h
+        .response({
+          status: 'success',
+          message: 'Album berhasil ditambahkan',
+          data: {
+            albumId,
+          },
+        })
+        .code(201);
     } catch (error) {
       if (error instanceof ClientError) {
-        const response = h.response({
-          status: 'fail',
-          message: error.message,
-        });
-
-        response.code(error.statusCode);
-        return response;
+        return h
+          .response({
+            status: 'fail',
+            message: error.message,
+          })
+          .code(error.statusCode);
       }
 
       console.error(error);
-      const response = h.response({
-        status: 'error',
-        message: 'Maaf terjadi kegagalan di server kami',
-      });
-
-      response.code(500);
-      return response;
+      return h
+        .response({
+          status: 'error',
+          message: 'Maaf terjadi kegagalan di server kami',
+        })
+        .code(500);
     }
   }
 
@@ -61,23 +59,21 @@ class AlbumsHandler {
       };
     } catch (error) {
       if (error instanceof ClientError) {
-        const response = h.response({
-          status: 'fail',
-          message: error.message,
-        });
-
-        response.code(error.statusCode);
-        return response;
+        return h
+          .response({
+            status: 'fail',
+            message: error.message,
+          })
+          .code(error.statusCode);
       }
 
       console.error(error);
-      const response = h.response({
-        status: 'error',
-        message: 'Maaf terjadi kegagalan di server kami',
-      });
-
-      response.code(500);
-      return response;
+      return h
+        .response({
+          status: 'error',
+          message: 'Maaf terjadi kegagalan di server kami',
+        })
+        .code(500);
     }
   }
 
@@ -87,31 +83,29 @@ class AlbumsHandler {
     try {
       await this._service.editAlbumById(albumId, req.payload);
 
-      const response = h.response({
-        status: 'success',
-        message: 'Album berhasil diperbarui',
-      });
-      response.code(200);
-      return response;
+      return h
+        .response({
+          status: 'success',
+          message: 'Album berhasil diperbarui',
+        })
+        .code(200);
     } catch (error) {
       if (error instanceof ClientError) {
-        const response = h.response({
-          status: 'fail',
-          message: error.message,
-        });
-
-        response.code(error.statusCode);
-        return response;
+        return h
+          .response({
+            status: 'fail',
+            message: error.message,
+          })
+          .code(error.statusCode);
       }
 
       console.error(error);
-      const response = h.response({
-        status: 'error',
-        message: 'Maaf terjadi kegagalan di server kami',
-      });
-
-      response.code(500);
-      return response;
+      return h
+        .response({
+          status: 'error',
+          message: 'Maaf terjadi kegagalan di server kami',
+        })
+        .code(500);
     }
   }
 
@@ -121,31 +115,29 @@ class AlbumsHandler {
     try {
       await this._service.deleteAlbumById(albumId);
 
-      const response = h.response({
-        status: 'success',
-        message: 'Album berhasil dihapus',
-      });
-      response.code(200);
-      return response;
+      return h
+        .response({
+          status: 'success',
+          message: 'Album berhasil dihapus',
+        })
+        .code(200);
     } catch (error) {
       if (error instanceof ClientError) {
-        const response = h.response({
-          status: 'fail',
-          message: error.message,
-        });
-
-        response.code(error.statusCode);
-        return response;
+        return h
+          .response({
+            status: 'fail',
+            message: error.message,
+          })
+          .code(error.statusCode);
       }
 
       console.error(error);
-      const response = h.response({
-        status: 'error',
-        message: 'Maaf terjadi kegagalan di server kami',
-      });
-
-      response.code(500);
-      return response;
+      return h
+        .response({
+          status: 'error',
+          message: 'Maaf terjadi kegagalan di server kami',
+        })
+        .code(500);
     }
   }
 }
