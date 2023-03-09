@@ -67,8 +67,8 @@ class NotesHandler {
 
   async getNoteByIdHandler(request, h) {
     try {
-      const { noteId } = request.params;
-      const note = await this._service.getNoteById(noteId);
+      const { id } = request.params;
+      const note = await this._service.getNoteById(id);
       return {
         status: 'success',
         data: {
@@ -98,11 +98,11 @@ class NotesHandler {
   }
 
   async putNoteByIdHandler(request, h) {
-    // bisa access method karena udah di-register
-    this._validator.validateNotePayload(request.payload);
-    const { noteId } = request.params;
     try {
-      await this._service.editNoteById(noteId, request.payload);
+      // bisa access method karena udah di-register
+      this._validator.validateNotePayload(request.payload);
+      const { id } = request.params;
+      await this._service.editNoteById(id, request.payload);
 
       const response = h.response({
         status: 'success',
@@ -133,10 +133,9 @@ class NotesHandler {
   }
 
   async deleteNoteByIdHandler(request, h) {
-    const { noteId } = request.params;
-
     try {
-      await this._service.deleteNoteById(noteId);
+      const { id } = request.params;
+      await this._service.deleteNoteById(id);
 
       const response = h.response({
         status: 'success',
