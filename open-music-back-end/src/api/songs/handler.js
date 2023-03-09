@@ -30,7 +30,7 @@ class SongsHandler {
             songId,
           },
         })
-        .code(200);
+        .code(201);
     } catch (error) {
       if (error instanceof ClientError) {
         return h
@@ -85,8 +85,8 @@ class SongsHandler {
 
   async getSongByIdHandler(req, h) {
     try {
-      const { songId } = req.params;
-      const song = await this._service.getSongById(songId);
+      const { id } = req.params;
+      const song = await this._service.getSongById(id);
 
       return h
         .response({
@@ -95,7 +95,7 @@ class SongsHandler {
             song,
           },
         })
-        .code(201);
+        .code(200);
     } catch (error) {
       if (error instanceof ClientError) {
         return h
@@ -119,16 +119,16 @@ class SongsHandler {
   async putSongByIdHandler(req, h) {
     try {
       this._validator.validateSongPayload(req.payload);
-      const { songId } = req.params;
+      const { id } = req.params;
 
-      await this._service.editSongById(songId, req.payload);
+      await this._service.editSongById(id, req.payload);
 
       return h
         .response({
           status: 'success',
           message: 'Lagu berhasil diperbarui',
         })
-        .code(201);
+        .code(200);
     } catch (error) {
       if (error instanceof ClientError) {
         return h
@@ -150,15 +150,15 @@ class SongsHandler {
 
   async deleteSongByIdHandler(req, h) {
     try {
-      const { songId } = req.params;
-      await this._service.deleteSongById(songId);
+      const { id } = req.params;
+      await this._service.deleteSongById(id);
 
-      const response = h.response({
-        status: 'success',
-        message: 'Lagu berhasil dihapus',
-      });
-      response.code(201);
-      return response;
+      return h
+        .response({
+          status: 'success',
+          message: 'Lagu berhasil dihapus',
+        })
+        .code(200);
     } catch (error) {
       if (error instanceof ClientError) {
         return h

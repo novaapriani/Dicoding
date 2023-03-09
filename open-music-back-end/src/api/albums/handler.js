@@ -48,15 +48,18 @@ class AlbumsHandler {
 
   async getAlbumByIdHandler(req, h) {
     try {
-      const { albumId } = req.params;
-      const album = await this._service.getAlbumById(albumId);
-      const song = await this._service.getSongsAlbum(albumId);
-      return {
-        status: 'success',
-        data: {
-          album: { ...album, song },
-        },
-      };
+      const { id } = req.params;
+      const album = await this._service.getAlbumById(id);
+      const song = await this._service.getSongsAlbum(id);
+
+      return h
+        .response({
+          status: 'success',
+          data: {
+            album: { ...album, song },
+          },
+        })
+        .code(200);
     } catch (error) {
       if (error instanceof ClientError) {
         return h
@@ -78,10 +81,10 @@ class AlbumsHandler {
   }
 
   async putAlbumByIdHandler(req, h) {
-    this._validator.validateAlbumPayload(req.payload);
-    const { albumId } = req.params;
     try {
-      await this._service.editAlbumById(albumId, req.payload);
+      this._validator.validateAlbumPayload(req.payload);
+      const { id } = req.params;
+      await this._service.editAlbumById(id, req.payload);
 
       return h
         .response({
@@ -110,10 +113,10 @@ class AlbumsHandler {
   }
 
   async deleteAlbumByIdHandler(req, h) {
-    const { albumId } = req.params;
+    const { id } = req.params;
 
     try {
-      await this._service.deleteAlbumById(albumId);
+      await this._service.deleteAlbumById(id);
 
       return h
         .response({
