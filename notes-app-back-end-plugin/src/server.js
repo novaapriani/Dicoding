@@ -1,13 +1,17 @@
-// import dotenv run the config
+// mengimpor dotenv dan menjalankan konfigurasinya
 require('dotenv').config();
 
 const Hapi = require('@hapi/hapi');
+
+// notes
 const notes = require('./api/notes');
-const users = require('./api/users');
 const NotesService = require('./services/postgres/NotesService');
+const NotesValidator = require('./validator/notes');
+
+// users
+const users = require('./api/users');
 const UsersService = require('./services/postgres/UsersService');
-const { NotesValidator } = require('./validator/notes');
-const { UsersValidator } = require('./validator/users');
+const UsersValidator = require('./validator/users');
 
 const init = async () => {
   const notesService = new NotesService();
@@ -23,7 +27,6 @@ const init = async () => {
     },
   });
 
-  // register the plugin
   await server.register([
     {
       plugin: notes,
