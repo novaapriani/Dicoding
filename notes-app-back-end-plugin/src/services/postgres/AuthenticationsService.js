@@ -10,6 +10,7 @@ class AuthenticationsService {
     await this._pool.query(`insert into authentications values('${token}')`);
   }
 
+  // cek refresh token ada di database
   async verifyRefreshToken(token) {
     const query = {
       text: 'select token from authentications where token = $1',
