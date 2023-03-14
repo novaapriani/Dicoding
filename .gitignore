@@ -3,4 +3,4 @@
 JS Dasar/
 node_modules/
 *.env
-notes-app-back-end-plugin\src\api\uploads\file
+notes-app-back-end-plugin/src/api/uploads/file
