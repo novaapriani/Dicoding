@@ -28,6 +28,7 @@ const TokenManager = require('./tokenize/TokenManager');
 const playlists = require('./api/playlists');
 const PlaylistsService = require('./services/postgres/PlaylistsService');
 const PlaylistsValidator = require('./validator/playlists');
+const config = require('./utils/config');
 
 const init = async () => {
   const albumsService = new AlbumsService();
@@ -38,7 +39,7 @@ const init = async () => {
 
   const server = Hapi.server({
     port: 5000,
-    host: process.env.HOST,
+    host: config.app.host,
     routes: {
       cors: {
         origin: ['*'],
