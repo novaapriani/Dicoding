@@ -7,6 +7,12 @@ const init = async () => {
   const queue = 'dicoding';
   const message = 'Selamat belajar Message Broker!';
 
+  /* 
+    .assertQueue(q name, options)
+    idempoten : membuat channel baru jika tidak ada
+    menjaga agar queue tetap tersedia ketika message broker restart
+  */
+  // cek queue sudah dibuat belum
   await channel.assertQueue(queue, {
     durable: true,
   });

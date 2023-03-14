@@ -10,6 +10,7 @@ const init = async () => {
     durable: true,
   });
 
+  // consume message
   channel.consume(
     queue,
     (message) => {
