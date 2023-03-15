@@ -85,6 +85,19 @@ class PlaylistsService {
     }
   }
 
+  async verifyPlaylist(id) {
+    const query = {
+      text: 'select * from playlists where id = $1',
+      values: [id],
+    };
+
+    const result = await this._pool.query(query);
+
+    if (!result.rowCount) {
+      throw new NotFoundError('Playlist tidak ditemukan');
+    }
+  }
+
   async addPlaylistSong({ id: playlistId, songId }) {
     const id = `playlistSong-${nanoid(16)}`;
     const query = {
