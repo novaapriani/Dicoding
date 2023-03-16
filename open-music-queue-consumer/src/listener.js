@@ -17,7 +17,6 @@ class Listener {
       );
       const result = await this._mailSender.sendEmail(
         targetEmail,
-        playlistData.playlist.name,
         JSON.stringify(playlistData),
       );
 

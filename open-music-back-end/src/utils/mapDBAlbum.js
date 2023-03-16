@@ -1,8 +1,8 @@
-const mapDBAlbum = ({ id, name, year, coverurl }) => ({
+const mapDBAlbum = ({ id, name, year, coverUrl }) => ({
   id,
   name,
   year,
-  coverurl,
+  coverUrl,
 });
 
 module.exports = { mapDBAlbum };
