@@ -7,3 +7,4 @@ notes-app-back-end-plugin/src/api/uploads/file
 open-music-back-end/src/api/uploads/file
 
 *.config.js
+coverage/
